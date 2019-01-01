@@ -6,12 +6,12 @@ function buildSpeechletResponse(title, output, repromptText, shouldEndSession) {
     return {
         outputSpeech: {
             type: 'SSML',
-		ssml: output,
-		},
+		ssml: `<speak>${output}</speak>`,
+					     },
 	    card: {
             type: 'Simple',
-		title: `SessionSpeechlet - ${title}`,
-		content: `SessionSpeechlet - ${output}`,
+		title: 'Perfect Piano',
+		content: 'Piano Content',
 		},
 	    reprompt: {
             outputSpeech: {
@@ -38,7 +38,7 @@ function getWelcomeResponse(callback) {
     // If we wanted to initialize the session to have some attributes we could add those here.
     const sessionAttributes = {};
     const cardTitle = 'Welcome';
-    const speechOutput = "<speak>Welcome to Perfect Pitch Piano Please request to hear a key simply by saying Play Key Name</speak>";
+    const speechOutput = "Welcome to Perfect Pitch Piano Please request to hear a key simply by saying Play Key Name";
     // If the user either does not reply to the welcome message or says something that is not
     // understood, they will be prompted again with this text.
     const repromptText = 'Please retry and say for example, ' +
@@ -57,27 +57,29 @@ function handleSessionEndRequest(callback) {
 }
 
 function playKey(callback, pianoNote) {
-    var ssmlResponse = "<speak> <audio src='https://s3.amazonaws.com/notes-piano/A.mp3'/> </speak>";
+    var ssmlResponse = "<audio src='https://s3.amazonaws.com/notes-piano/A.mp3'/>";
     if (pianoNote == 'a sharp') {
-        ssmlResponse = "<speak> <audio src='https://s3.amazonaws.com/notes-piano/A#.mp3'/> </speak>";
+        ssmlResponse = "<audio src='https://s3.amazonaws.com/notes-piano/A%23.mp3'/>";
     } else if (pianoNote == 'b') {
-        ssmlResponse = "<speak> <audio src='https://s3.amazonaws.com/notes-piano/B.mp3'/> </speak>";
+        ssmlResponse = "<audio src='https://s3.amazonaws.com/notes-piano/B.mp3'/>";
     } else if (pianoNote == 'c') {
-        ssmlResponse = "<speak> <audio src='https://s3.amazonaws.com/notes-piano/C.mp3'/> </speak>";
+        ssmlResponse = "<audio src='https://s3.amazonaws.com/notes-piano/C.mp3'/>";
     } else if (pianoNote == 'c sharp') {
-        ssmlResponse = "<speak> <audio src='https://s3.amazonaws.com/notes-piano/C#.mp3'/> </speak>";
+        ssmlResponse = "<audio src='https://s3.amazonaws.com/notes-piano/C%23.mp3'/>";
     } else if (pianoNote == 'd') {
-        ssmlResponse = "<speak> <audio src='https://s3.amazonaws.com/notes-piano/D.mp3'/> </speak>";
+        ssmlResponse = "<audio src='https://s3.amazonaws.com/notes-piano/D.mp3'/>";
     } else if (pianoNote == 'd sharp') {
-        ssmlResponse = "<speak> <audio src='https://s3.amazonaws.com/notes-piano/D#.mp3'/> </speak>";
+        ssmlResponse = "<audio src='https://s3.amazonaws.com/notes-piano/D%23.mp3'/>";
     } else if (pianoNote == 'e') {
-        ssmlResponse = "<speak> <audio src='https://s3.amazonaws.com/notes-piano/E.mp3'/> </speak>";
+        ssmlResponse = "<audio src='https://s3.amazonaws.com/notes-piano/E.mp3'/>";
     } else if (pianoNote == 'f') {
-        ssmlResponse = "<speak> <audio src='https://s3.amazonaws.com/notes-piano/F.mp3'/> </speak>";
+        ssmlResponse = "<audio src='https://s3.amazonaws.com/notes-piano/F.mp3'/>";
     } else if (pianoNote == 'f sharp') {
-        ssmlResponse = "<speak> <audio src='https://s3.amazonaws.com/notes-piano/F#.mp3'/> </speak>";
+        ssmlResponse = "<audio src='https://s3.amazonaws.com/notes-piano/F%23.mp3'/>";
     } else if (pianoNote == 'g') {
-        ssmlResponse = "<speak> <audio src='https://s3.amazonaws.com/notes-piano/G.mp3'/> </speak>";
+        ssmlResponse = "<audio src='https://s3.amazonaws.com/notes-piano/G.mp3'/>";
+    } else if (pianoNote == 'g sharp') {
+        ssmlResponse = "<audio src='https://s3.amazonaws.com/notes-piano/G%23.mp3'/>";
     }
     callback({}, buildSpeechletResponse('Session Ended', ssmlResponse, null, false));
 }
@@ -129,7 +131,6 @@ function onIntent(intentRequest, session, callback) {
  */
 function onSessionEnded(sessionEndedRequest, session) {
     console.log(`onSessionEnded requestId=${sessionEndedRequest.requestId}, sessionId=${session.sessionId}`);
-    // Add cleanup logic here
 }
 
 
